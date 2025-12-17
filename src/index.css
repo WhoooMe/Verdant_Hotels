@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core palette - Maroon & Cream Luxury */
+    --background: 40 33% 96%;
+    --foreground: 355 41% 20%;
+
+    --card: 40 30% 98%;
+    --card-foreground: 355 41% 20%;
+
+    --popover: 40 30% 98%;
+    --popover-foreground: 355 41% 20%;
+
+    /* Maroon primary */
+    --primary: 355 41% 32%;
+    --primary-foreground: 40 33% 96%;
+
+    /* Cream secondary */
+    --secondary: 40 33% 92%;
+    --secondary-foreground: 355 41% 25%;
+
+    --muted: 40 20% 90%;
+    --muted-foreground: 355 15% 45%;
+
+    /* Gold accent */
+    --accent: 43 50% 57%;
+    --accent-foreground: 355 41% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 33% 96%;
+
+    --border: 40 20% 85%;
+    --input: 40 20% 85%;
+    --ring: 355 41% 32%;
+
+    --radius: 0.5rem;
+
+    /* Custom luxury tokens */
+    --gold: 43 50% 57%;
+    --gold-light: 43 45% 75%;
+    --maroon-deep: 355 50% 22%;
+    --maroon-light: 355 30% 45%;
+    --cream: 40 33% 96%;
+    --cream-dark: 40 25% 88%;
+    --warm-white: 40 40% 99%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(180deg, hsla(355, 41%, 20%, 0.7) 0%, hsla(355, 41%, 15%, 0.9) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(40, 30%, 98%) 0%, hsl(40, 25%, 95%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(43, 50%, 57%) 0%, hsl(43, 55%, 45%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsla(355, 41%, 20%, 0.1);
+    --shadow-card: 0 8px 40px -12px hsla(355, 41%, 20%, 0.15);
+    --shadow-elevated: 0 20px 60px -15px hsla(355, 41%, 20%, 0.2);
+
+    /* Sidebar */
+    --sidebar-background: 40 33% 96%;
+    --sidebar-foreground: 355 41% 20%;
+    --sidebar-primary: 355 41% 32%;
+    --sidebar-primary-foreground: 40 33% 96%;
+    --sidebar-accent: 40 33% 92%;
+    --sidebar-accent-foreground: 355 41% 25%;
+    --sidebar-border: 40 20% 85%;
+    --sidebar-ring: 355 41% 32%;
+  }
+
+  .dark {
+    --background: 355 41% 8%;
+    --foreground: 40 33% 96%;
+
+    --card: 355 35% 12%;
+    --card-foreground: 40 33% 96%;
+
+    --popover: 355 35% 12%;
+    --popover-foreground: 40 33% 96%;
+
+    --primary: 40 33% 92%;
+    --primary-foreground: 355 41% 15%;
+
+    --secondary: 355 30% 18%;
+    --secondary-foreground: 40 33% 96%;
+
+    --muted: 355 25% 20%;
+    --muted-foreground: 40 20% 65%;
+
+    --accent: 43 50% 57%;
+    --accent-foreground: 355 41% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 40 33% 96%;
+
+    --border: 355 25% 20%;
+    --input: 355 25% 20%;
+    --ring: 40 33% 92%;
+
+    --sidebar-background: 355 41% 8%;
+    --sidebar-foreground: 40 33% 96%;
+    --sidebar-primary: 40 33% 92%;
+    --sidebar-primary-foreground: 355 41% 15%;
+    --sidebar-accent: 355 30% 18%;
+    --sidebar-accent-foreground: 40 33% 96%;
+    --sidebar-border: 355 25% 20%;
+    --sidebar-ring: 40 33% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(43, 55%, 45%) 100%);
+  }
+
+  .bg-hero-overlay {
+    background: var(--gradient-hero);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md bg-card/80 border border-border/50;
+    box-shadow: var(--shadow-card);
+  }
+
+  .luxury-shadow {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .btn-luxury {
+    @apply relative overflow-hidden transition-all duration-500;
+  }
+
+  .btn-luxury::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full;
+    transition: transform 0.6s ease;
+  }
+
+  .btn-luxury:hover::before {
+    @apply translate-x-full;
+  }
+
+  /* Cinematic image treatment */
+  .img-cinematic {
+    @apply relative overflow-hidden;
+  }
+
+  .img-cinematic::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent;
+  }
+
+  /* Elegant underline animation */
+  .link-underline {
+    @apply relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  /* Scroll reveal animation */
+  .reveal {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+
+  .reveal.visible {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/50;
+}
