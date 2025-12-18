@@ -16,7 +16,7 @@ const rooms = [
     descriptionId:
       "Mengusung konsep kemewahan berkelanjutan, Suite ini menawarkan pengalaman menginap yang privat melalui desain modern, material alami, dan suasana yang hening menyatu dengan lingkungan.",
     image: roomSuite,
-    size: "250 m²",
+    size: "85 m²",
     price: 500,
   },
   {
@@ -28,7 +28,7 @@ const rooms = [
     descriptionId:
       "Bersemayam di bawah kanopi tropis yang megah, hunian ini memadukan arsitektur berkelas dan bukaan kaca luas, menciptakan pengalaman ruang yang menyatu lembut dengan ketenangan hutan.",
     image: roomDeluxe,
-    size: "70 m²",
+    size: "60 m²",
     price: 320,
   },
 ];

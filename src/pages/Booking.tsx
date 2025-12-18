@@ -11,20 +11,25 @@ import {
   Check,
   MessageCircle,
   Phone,
+  Baby,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import roomSuite from "@/assets/room-suite.jpg";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
+import villaGarden from "@/assets/villa-garden.jpg";
 
 const roomOptions = [
-  { id: "jungle-suite", name: "Jungle Suite", price: 450, image: roomSuite },
+  { id: "jungle-suite", name: "Executive Suite", price: 450, image: roomSuite },
   { id: "canopy-room", name: "Canopy Room", price: 320, image: roomDeluxe },
-  { id: "garden-villa", name: "Garden Villa", price: 750, image: roomSuite },
+  { id: "garden-villa", name: "Garden Villa", price: 750, image: villaGarden },
 ];
 
 function BookingContent() {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
+  const [childrenAges, setChildrenAges] = useState<number[]>([]);
+  const [showCustomGuests, setShowCustomGuests] = useState(false);
   const [formData, setFormData] = useState({
     checkIn: "",
     checkOut: "",
@@ -119,7 +124,7 @@ function BookingContent() {
                 <ScrollReveal>
                   <div className="space-y-8">
                     {/* Date Selection */}
-                    <div className="grid md:grid-cols-3 gap-6 p-8 bg-card rounded-lg border border-border">
+                    <div className="grid md:grid-cols-4 gap-6 p-8 bg-card rounded-lg border border-border">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           {t("booking.checkin")}
@@ -141,6 +146,8 @@ function BookingContent() {
                         </div>
                       </div>
                       <div>
+                        {" "}
+                        {/* Disini Awal Guests */}
                         <label className="block text-sm font-medium text-foreground mb-2">
                           {t("booking.checkout")}
                         </label>
@@ -164,27 +171,106 @@ function BookingContent() {
                         <label className="block text-sm font-medium text-foreground mb-2">
                           {t("booking.guests")}
                         </label>
+
+                        {/* SELECT */}
                         <div className="relative">
                           <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <select
-                            value={formData.guests}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                guests: e.target.value,
-                              })
-                            }
+                            value={showCustomGuests ? "5+" : formData.guests}
+                            onChange={(e) => {
+                              if (e.target.value === "5+") {
+                                setShowCustomGuests(true);
+                                setFormData({ ...formData, guests: "" });
+                              } else {
+                                setShowCustomGuests(false);
+                                setFormData({
+                                  ...formData,
+                                  guests: e.target.value,
+                                });
+                              }
+                            }}
                             className="w-full bg-background border border-input rounded-md pl-10 pr-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all appearance-none"
                           >
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4 Guests</option>
+                            <option value="1">{t("booking.guests1")}</option>
+                            <option value="2">{t("booking.guests2")}</option>
+                            <option value="3">{t("booking.guests3")}</option>
+                            <option value="4">{t("booking.guests4")}</option>
+                            <option value="5+">
+                              {t("booking.guests5plus")}
+                            </option>
                           </select>
                         </div>
-                      </div>
-                    </div>
 
+                        {/* CUSTOM INPUT */}
+                        {showCustomGuests && (
+                          <div className="mt-3 relative">
+                            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                            <input
+                              type="number"
+                              min={5}
+                              placeholder={t("booking.enterGuests")}
+                              value={formData.guests}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  guests: e.target.value,
+                                })
+                              }
+                              className="w-full bg-background border border-input rounded-md pl-10 pr-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                              required
+                            />
+                          </div>
+                        )}
+                      </div>
+                      {/* Children */}
+                      <div>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">
+                          {t("booking.children")}
+                        </label>
+
+                        <select
+                          value={childrenCount}
+                          onChange={(e) => {
+                            const count = Number(e.target.value);
+                            setChildrenCount(count);
+                            setChildrenAges(Array(count).fill(0));
+                          }}
+                          className="w-full bg-background border border-input rounded-md px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                        >
+                          <option value={0}>{t("booking.noChildren")}</option>
+                          <option value={1}>{t("booking.oneChildren")}</option>
+                          <option value={2}>{t("booking.twoChildren")}</option>
+                          <option value={3}>
+                            {t("booking.threeChildren")}
+                          </option>
+                          <option value={4}>{t("booking.fourChildren")}</option>
+                        </select>
+
+                        {childrenCount > 0 && (
+                          <div className="mt-3 space-y-2">
+                            {childrenAges.map((age, index) => (
+                              <input
+                                key={index}
+                                type="number"
+                                min={0}
+                                max={17}
+                                placeholder={`${t("booking.child")} ${
+                                  index + 1
+                                } — ${t("booking.ageC")}`}
+                                value={age || ""}
+                                onChange={(e) => {
+                                  const ages = [...childrenAges];
+                                  ages[index] = Number(e.target.value);
+                                  setChildrenAges(ages);
+                                }}
+                                className="w-full bg-background border border-input rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>{" "}
+                    {/* Akhir Guests */}
                     {/* Room Selection */}
                     <div>
                       <h3 className="font-serif text-2xl text-foreground mb-6">
@@ -219,7 +305,7 @@ function BookingContent() {
                               <p className="text-primary font-medium">
                                 ${room.price}{" "}
                                 <span className="text-muted-foreground text-sm">
-                                  / night
+                                  {t("booking.perNight")}
                                 </span>
                               </p>
                             </div>

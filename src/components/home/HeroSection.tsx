@@ -12,7 +12,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden hero-grain">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -20,7 +20,14 @@ export function HeroSection() {
           alt="The Verdant luxury eco hotel"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50" />
+        {/* Cinematic Overlay */}
+        <div className="absolute inset-0 bg-black/45" />
+
+        {/* Vignette */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.35)_55%,rgba(0,0,0,0.75)_100%)]" />
+
+        {/* Top & Bottom cinematic shading */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
       </div>
 
       {/* Content */}

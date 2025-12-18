@@ -9,10 +9,24 @@ import {
   Leaf,
   Waves,
   Sunrise,
+  BedSingle,
+  Sprout,
+  Flower,
+  Brain,
+  ChefHat,
+  Wine,
+  GraduationCap,
+  Trees,
+  Droplets,
+  Bird,
+  Sun,
+  Apple,
+  Wheat,
+  Wind,
 } from "lucide-react";
 import spaImage from "@/assets/spa.jpg";
 import restaurantImage from "@/assets/restaurant.jpg";
-import heroImage from "@/assets/hero-hotel.jpg";
+import exploreNature from "@/assets/explore-nature.jpg";
 
 const experiences = [
   {
@@ -23,7 +37,7 @@ const experiences = [
     description:
       "Immerse yourself in ancient Balinese healing traditions combined with modern wellness techniques. Our rainforest spa offers a sanctuary for complete renewal of body, mind, and spirit.",
     descriptionId:
-      "Celupkan diri Anda dalam tradisi penyembuhan Bali kuno yang dikombinasikan dengan teknik kesehatan modern. Spa hutan hujan kami menawarkan tempat perlindungan untuk pembaruan total tubuh, pikiran, dan jiwa.",
+      "Terinspirasi oleh tradisi penyembuhan Bali yang luhur, dipadukan dengan pendekatan wellness modern. Sebuah spa di tengah hutan hujan, menciptakan ruang pemulihan tubuh, pikiran, dan jiwa.",
     image: spaImage,
     features: [
       "Traditional Massage",
@@ -38,6 +52,7 @@ const experiences = [
       "Meditasi",
     ],
   },
+
   {
     id: "dining",
     icon: Utensils,
@@ -56,7 +71,7 @@ const experiences = [
     ],
     featuresId: [
       "Bahan Organik",
-      "Chef's Table",
+      "Meja Koki",
       "Pasangan Anggur",
       "Kelas Memasak",
     ],
@@ -69,10 +84,10 @@ const experiences = [
     description:
       "Explore the untouched beauty of our surrounding landscapes with guided treks through ancient forests, hidden waterfalls, and sacred temples.",
     descriptionId:
-      "Jelajahi keindahan alami lanskap sekitar kami dengan trekking terpandu melalui hutan kuno, air terjun tersembunyi, dan pura suci.",
-    image: heroImage,
+      "Jelajahi keindahan alam lanskap di sekitar kami dengan trekking terpandu melalui hutan kuno, air terjun tersembunyi, dan pura suci.",
+    image: exploreNature,
     features: [
-      "Jungle Trekking",
+      "Jungle Tracking",
       "Waterfall Visits",
       "Bird Watching",
       "Sunrise Hikes",
@@ -88,9 +103,53 @@ const experiences = [
 
 const additionalActivities = [
   { icon: Waves, name: "Infinity Pool", nameId: "Kolam Infinity" },
-  { icon: Sunrise, name: "Sunrise Yoga", nameId: "Yoga Matahari Terbit" },
+  { icon: Sun, name: "Sunrise Yoga", nameId: "Yoga Matahari Terbit" },
   { icon: Leaf, name: "Eco Tours", nameId: "Tur Ramah Lingkungan" },
 ];
+
+const featureIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
+  // SPA
+  "Traditional Massage": BedSingle,
+  "Pijat Tradisional": BedSingle,
+
+  "Herbal Treatments": Sprout,
+  "Perawatan Herbal": Sprout,
+
+  "Yoga Sessions": Flower,
+  "Sesi Yoga": Flower,
+
+  Meditation: Brain,
+  Meditasi: Brain,
+
+  // DINING
+  "Organic Ingredients": Apple,
+  "Bahan Organik": Apple,
+
+  "Chef's Table": ChefHat,
+  "Meja Koki": ChefHat,
+
+  "Wine Pairing": Wine,
+  "Pasangan Anggur": Wine,
+
+  "Cooking Classes": GraduationCap,
+  "Kelas Memasak": GraduationCap,
+
+  // NATURE
+  "Jungle Tracking": Trees,
+  "Trekking Hutan": Trees,
+
+  "Waterfall Visits": Droplets,
+  "Kunjungan Air Terjun": Droplets,
+
+  "Bird Watching": Bird,
+  "Pengamatan Burung": Bird,
+
+  "Sunrise Hikes": Sunrise,
+  "Pendakian Matahari Terbit": Sunrise,
+};
 
 function ExperienceContent() {
   const { language, t } = useLanguage();
@@ -157,17 +216,21 @@ function ExperienceContent() {
                     {/* Features */}
                     <div className="grid grid-cols-2 gap-4">
                       {(language === "en" ? exp.features : exp.featuresId).map(
-                        (feature) => (
-                          <div
-                            key={feature}
-                            className="flex items-center gap-3 p-4 bg-secondary rounded-lg"
-                          >
-                            <div className="w-2 h-2 bg-accent rounded-full" />
-                            <span className="text-foreground text-sm">
-                              {feature}
-                            </span>
-                          </div>
-                        )
+                        (feature) => {
+                          const Icon = featureIcons[feature] || Sparkles;
+
+                          return (
+                            <div
+                              key={feature}
+                              className="flex items-center gap-3 p-4 bg-secondary rounded-lg"
+                            >
+                              <Icon className="w-5 h-5 text-primary" />
+                              <span className="text-foreground text-sm">
+                                {feature}
+                              </span>
+                            </div>
+                          );
+                        }
                       )}
                     </div>
                   </div>

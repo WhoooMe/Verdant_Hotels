@@ -12,9 +12,11 @@ import {
   Wind,
   Coffee,
   Bath,
+  BedDouble,
 } from "lucide-react";
 import roomSuite from "@/assets/room-suite.jpg";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
+import villaGarden from "@/assets/villa-garden.jpg";
 
 const rooms = [
   {
@@ -53,7 +55,7 @@ const rooms = [
       "Secluded villa with private garden, outdoor bathtub, and dedicated butler service. An exclusive sanctuary for discerning travelers.",
     descriptionId:
       "Vila terpencil dengan taman pribadi, bathtub outdoor, dan layanan butler khusus. Tempat peristirahatan eksklusif untuk wisatawan yang cerdas.",
-    image: roomSuite,
+    image: villaGarden,
     size: "250 m²",
     price: 750,
     capacity: "2-10 guests",
@@ -72,7 +74,7 @@ const amenityIcons: Record<
   string,
   React.ComponentType<{ className?: string }>
 > = {
-  "King Bed": Bath,
+  "King Bed": BedDouble,
   "Private Pool": Bath,
   "Rain Shower": Bath,
   "Mini Bar": Coffee,

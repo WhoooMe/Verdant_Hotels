@@ -23,18 +23,14 @@ export function AboutSection() {
               {t("about.description")}
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              Every element of The Verdant has been thoughtfully designed to
-              minimize environmental impact while maximizing the guest
-              experience. From our solar-powered facilities to our organic
-              gardens, we demonstrate that true luxury lies in harmony with
-              nature.
+              {t("about.description2")}
             </p>
 
             <div className="flex flex-wrap gap-8 mb-10">
               {[
-                { value: "100%", label: "Solar Powered" },
-                { value: "15+", label: "Years of Excellence" },
-                { value: "50K+", label: "Happy Guests" },
+                { value: "100%", label: t("about.stats.carbonH") },
+                { value: "15+", label: t("about.stats.yearsH") },
+                { value: "50K+", label: t("about.stats.guestsH") },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="font-serif text-3xl text-primary">
@@ -59,12 +55,12 @@ export function AboutSection() {
               <div className="aspect-[4/5] rounded-lg overflow-hidden">
                 <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <div className="text-center p-12">
-                    <p className="font-serif text-6xl text-primary mb-4">15</p>
+                    <p className="font-serif text-6xl text-primary mb-4">20</p>
                     <p className="text-muted-foreground tracking-widest uppercase text-sm">
-                      Years of
+                      {t("about.yearsOfExcellence")}
                     </p>
                     <p className="font-serif text-2xl text-foreground">
-                      Sustainable Luxury
+                      {t("about.inHospitality")}
                     </p>
                   </div>
                 </div>
