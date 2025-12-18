@@ -18,32 +18,32 @@ import roomDeluxe from "@/assets/room-deluxe.jpg";
 
 const rooms = [
   {
-    id: "jungle-suite",
-    name: "Jungle Suite",
-    nameId: "Suite Hutan",
+    id: "executive-suite",
+    name: "Executive Suite",
+    nameId: "Suite Eksekutif",
     description:
-      "Expansive living with panoramic jungle views, private terrace, and outdoor rain shower. Perfect for those seeking the ultimate tropical retreat.",
+      "Escape to an elevated eco-luxury sanctuary. Framed by open spaces and natural textures, this private suite offers a quiet harmony between refined comfort and the surrounding landscape.",
     descriptionId:
-      "Ruang tamu luas dengan pemandangan hutan panorama, teras pribadi, dan shower hujan outdoor. Sempurna untuk mereka yang mencari peristirahatan tropis terbaik.",
+      "Mengusung konsep kemewahan berkelanjutan, Suite ini menawarkan pengalaman menginap yang privat melalui desain modern, material alami, dan suasana yang hening menyatu dengan lingkungan.",
     image: roomSuite,
     size: "85 m²",
-    price: 450,
-    capacity: "2-3 guests",
+    price: 500,
+    capacity: "2-5 guests",
     amenities: ["King Bed", "Private Pool", "Rain Shower", "Mini Bar", "Wi-Fi"],
   },
   {
     id: "canopy-room",
     name: "Canopy Room",
-    nameId: "Kamar Kanopi",
+    nameId: "Kamar Canopy",
     description:
-      "Intimate retreat surrounded by tropical canopy, featuring floor-to-ceiling windows that blur the boundary between indoor and outdoor living.",
+      "A secluded escape beneath towering tropical foliage, designed with floor-to-ceiling windows that blur the line between interior comfort and the living forest beyond.",
     descriptionId:
-      "Tempat peristirahatan intim yang dikelilingi kanopi tropis, dengan jendela dari lantai hingga langit-langit yang mengaburkan batas antara ruang dalam dan luar.",
+      "Bersemayam di bawah kanopi tropis yang megah, hunian ini memadukan arsitektur berkelas dan bukaan kaca luas, menciptakan pengalaman ruang yang menyatu lembut dengan ketenangan hutan.",
     image: roomDeluxe,
-    size: "55 m²",
+    size: "60 m²",
     price: 320,
     capacity: "2 guests",
-    amenities: ["King Bed", "Garden View", "Rain Shower", "Mini Bar", "Wi-Fi"],
+    amenities: ["King Bed", "Garden View", "Rain Shower", "Wi-Fi"],
   },
   {
     id: "garden-villa",
@@ -52,15 +52,16 @@ const rooms = [
     description:
       "Secluded villa with private garden, outdoor bathtub, and dedicated butler service. An exclusive sanctuary for discerning travelers.",
     descriptionId:
-      "Vila terpencil dengan taman pribadi, bathtub outdoor, dan layanan butler khusus. Tempat perlindungan eksklusif untuk pelancong yang cerdas.",
+      "Vila terpencil dengan taman pribadi, bathtub outdoor, dan layanan butler khusus. Tempat peristirahatan eksklusif untuk wisatawan yang cerdas.",
     image: roomSuite,
-    size: "120 m²",
+    size: "250 m²",
     price: 750,
-    capacity: "2-4 guests",
+    capacity: "2-10 guests",
     amenities: [
       "King Bed",
       "Private Pool",
       "Outdoor Bath",
+      "Mini Bar",
       "Butler Service",
       "Wi-Fi",
     ],

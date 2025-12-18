@@ -36,8 +36,8 @@ const translations: Translations = {
   "rooms.subtitle": { en: "Accommodations", id: "Akomodasi" },
   "rooms.title": { en: "Rooms & Suites", id: "Kamar & Suite" },
   "rooms.description": {
-    en: "Each space designed to harmonize with nature while providing uncompromising comfort.",
-    id: "Setiap ruang dirancang untuk harmoni dengan alam sambil memberikan kenyamanan tanpa kompromi.",
+    en: "Each space designed to harmonize with nature while providing uncompromising comfort",
+    id: "Dirancang selaras dengan alam, menghadirkan kenyamanan mewah yang tak terlupakan",
   },
   "rooms.view": { en: "View Details", id: "Lihat Detail" },
   "rooms.from": { en: "From", id: "Mulai dari" },
@@ -54,9 +54,29 @@ const translations: Translations = {
   // About
   "about.subtitle": { en: "Our Story", id: "Cerita Kami" },
   "about.title": { en: "A Vision of Harmony", id: "Visi Harmoni" },
+  "about.cta.title": {
+    en: "Experience The Verdant",
+    id: "Rasakan Keindahan Verdant",
+  },
+  "about.cta.description": {
+    en: "Begin your journey to sustainable luxury. We look forward to welcoming you.",
+    id: "Mulailah perjalanan Anda menuju kemewahan berkelanjutan. Kami menantikan kedatangan Anda.",
+  },
   "about.description": {
     en: "Founded on the belief that luxury and sustainability can coexist beautifully, The Verdant represents a new chapter in hospitality.",
     id: "Didirikan atas keyakinan bahwa kemewahan dan keberlanjutan dapat hidup berdampingan dengan indah, The Verdant mewakili babak baru dalam hospitalitas.",
+  },
+  "about.storyTitle": {
+    en: "A vision where luxury lives in harmony with nature",
+    id: "Visi dimana kemewahan berpadu selaras dengan alam",
+  },
+  "about.storyParagraph1": {
+    en: "The Verdant was founded in 2009 by a family passionate about preserving Bali's natural beauty while sharing its magic with travelers from around the world. What began as a small eco-lodge has grown into an internationally recognized sanctuary of sustainable luxury.",
+    id: "The Verdant didirikan pada tahun 2009 oleh sebuah keluarga yang bersemangat dalam melestarikan keindahan alam Bali sambil membagikan pesonanya kepada para pelancong dari seluruh dunia. Yang awalnya dimulai sebagai penginapan ekowisata kecil, kini telah berkembang menjadi surga mewah berkelanjutan yang diakui secara internasional.",
+  },
+  "about.storyParagraph2": {
+    en: "Today, we continue to pioneer new approaches to responsible hospitality, proving that extraordinary experiences and environmental stewardship can not only coexist but enhance one another.",
+    id: "Kami terus mengembangkan cara baru dalam menghadirkan hospitalitas yang berkelanjutan, membuktikan bahwa kemewahan dalam pengalaman dapat berjalan selaras dengan tanggung jawab terhadap alam.",
   },
 
   // Booking
@@ -76,6 +96,22 @@ const translations: Translations = {
   "footer.newsletter": { en: "Newsletter", id: "Buletin" },
   "footer.subscribe": { en: "Subscribe", id: "Berlangganan" },
   "footer.rights": { en: "All rights reserved", id: "Hak cipta dilindungi" },
+
+  // Stats
+  "about.stats.established": { en: "Established", id: "Didirikan" },
+  "about.stats.carbon": { en: "Carbon Neutral", id: "Netral Karbon" },
+  "about.stats.years": { en: "Awards Won", id: "Penghargaan Diperoleh" },
+  "about.stats.guests": { en: "Happy Guests", id: "Tamu Bahagia" },
+
+  //Values
+  "about.valuesTitle": {
+    en: "Our Guiding Principles",
+    id: "Prinsip Panduan Kami",
+  },
+  "about.valuesDescription": {
+    en: "These values shape every aspect of The Verdant experience.",
+    id: "Prinsip-prinsip ini membentuk setiap aspek dari pengalaman The Verdant.",
+  },
 
   // Common
   "common.learnMore": { en: "Learn More", id: "Pelajari Lebih Lanjut" },

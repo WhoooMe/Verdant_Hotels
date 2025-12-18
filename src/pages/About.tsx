@@ -11,7 +11,7 @@ const values = [
   {
     icon: Leaf,
     title: "Sustainability First",
-    titleId: "Keberlanjutan Utama",
+    titleId: "Keberlanjutan sebagai Prinsip Utama",
     description:
       "Every decision we make considers its environmental impact. From solar power to organic gardens, we lead by example.",
     descriptionId:
@@ -20,11 +20,11 @@ const values = [
   {
     icon: Heart,
     title: "Genuine Hospitality",
-    titleId: "Keramahan Tulus",
+    titleId: "Melayani dengan Hati",
     description:
       "Our team embodies the warmth of Indonesian culture, ensuring every guest feels welcomed and cherished.",
     descriptionId:
-      "Tim kami mewujudkan kehangatan budaya Indonesia, memastikan setiap tamu merasa disambut dan dihargai.",
+      "Tim kami mewujudkan kehangatan budaya yang ada di Indonesia, memastikan setiap tamu merasa disambut dan dihargai.",
   },
   {
     icon: Globe,
@@ -33,16 +33,16 @@ const values = [
     description:
       "We partner with local artisans, farmers, and guides to create authentic experiences while supporting the local economy.",
     descriptionId:
-      "Kami bermitra dengan pengrajin lokal, petani, dan pemandu untuk menciptakan pengalaman autentik sambil mendukung ekonomi lokal.",
+      "Kami bermitra dengan pengrajin, petani, dan pemandu lokal untuk menciptakan pengalaman yang autentik sambil mendukung ekonomi lokal.",
   },
   {
     icon: Award,
     title: "Uncompromising Quality",
-    titleId: "Kualitas Tanpa Kompromi",
+    titleId: "Standar Kualitas Tinggi",
     description:
       "Luxury is in the details. Every amenity, every service, every moment is crafted to exceed expectations.",
     descriptionId:
-      "Kemewahan ada dalam detailnya. Setiap fasilitas, setiap layanan, setiap momen dibuat untuk melampaui harapan.",
+      "Kemewahan hadir dalam setiap detail. Dari fasilitas hingga pelayanan, setiap momen dirancang melampaui ekspektasi.",
   },
 ];
 
@@ -88,10 +88,7 @@ function AboutContent() {
                   {t("about.storyParagraph1")}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Today, we continue to pioneer new approaches to responsible
-                  hospitality, proving that extraordinary experiences and
-                  environmental stewardship can not only coexist but enhance one
-                  another.
+                  {t("about.storyParagraph2")}
                 </p>
               </div>
             </ScrollReveal>
@@ -102,8 +99,8 @@ function AboutContent() {
                 {[
                   { value: "2009", label: t("about.stats.established") },
                   { value: "100%", label: t("about.stats.carbon") },
-                  { value: "15+", label: "Awards Won" },
-                  { value: "50K+", label: "Happy Guests" },
+                  { value: "15+", label: t("about.stats.years") },
+                  { value: "50K+", label: t("about.stats.guests") },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center">
                     <p className="font-serif text-3xl md:text-4xl text-primary mb-2">
@@ -125,17 +122,17 @@ function AboutContent() {
         <div className="container mx-auto px-6">
           <ScrollReveal className="text-center mb-16">
             <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
-              Our Guiding Principles
+              {t("about.valuesTitle")}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              These values shape every aspect of The Verdant experience.
+              {t("about.valuesDescription")}
             </p>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
             {values.map((value, index) => (
               <ScrollReveal key={value.title} delay={index * 100}>
-                <div className="p-8 bg-card rounded-lg border border-border hover:border-primary/30 hover:shadow-card transition-all duration-300">
+                <div className="p-8 bg-card rounded-lg border border-border h-full flex flex-col hover:border-primary/30 hover:shadow-card transition-all duration-300">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                     <value.icon className="w-6 h-6 text-primary" />
                   </div>
