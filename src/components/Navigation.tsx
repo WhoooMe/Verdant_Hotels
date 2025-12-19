@@ -1,20 +1,47 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, User, Clock, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LogoIcon from "@/assets/logo-icon.png";
 import { cn } from "@/lib/utils";
+import LoginModal from "./auth/LoginModal.tsx";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import RegisterModal from "@/components/auth/RegisterModal";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeSlideDown } from "@/lib/animations";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+  const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setOpenProfile(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      setOpenProfile(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -95,13 +122,123 @@ export function Navigation() {
                 {language.toUpperCase()}
               </button>
 
+              {/* LOGIN PROFILE */}
+              <div ref={profileRef} className="relative">
+                <button
+                  onClick={() => {
+                    if (!user) {
+                      setOpenLogin(true);
+                    } else {
+                      setOpenProfile(!openProfile);
+                    }
+                  }}
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-full border overflow-hidden transition-colors",
+                    user?.photoURL ? "" : "bg-primary/10"
+                  )}
+                >
+                  {user?.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt={user.displayName || "User"}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm font-semibold text-primary">
+                      {user?.displayName
+                        ? user.displayName.charAt(0).toUpperCase()
+                        : "U"}
+                    </span>
+                  )}
+                </button>
+
+                {
+                  <AnimatePresence>
+                    {openProfile && user && (
+                      <motion.div
+                        variants={fadeSlideDown}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="absolute right-0 mt-3 w-64 z-50 origin-top-right"
+                      >
+                        {/* DROPDOWN CONTAINER */}
+                        <div className="rounded-2xl bg-[#FAF7F2] border border-[#E7DED3] shadow-xl">
+                          {/* USER INFO */}
+                          <div className="px-4 py-3 border-b border-[#E7DED3]">
+                            <p className="text-sm font-semibold text-stone-900">
+                              {user?.displayName || "Pengguna"}
+                            </p>
+                            <p className="text-xs text-stone-500 truncate">
+                              {user?.email}
+                            </p>
+                          </div>
+
+                          {/* MENU ITEMS */}
+                          <button
+                            onClick={() => {
+                              navigate("/profile");
+                              setOpenProfile(false);
+                            }}
+                            className="flex items-center gap-3 w-full px-4 py-3 text-left
+          text-stone-700 hover:bg-[#F4EFE8] transition-colors"
+                          >
+                            <User size={18} className="text-emerald-700" />
+                            <span className="text-sm font-medium">
+                              Profil Saya
+                            </span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              navigate("/my-reservations");
+                              setOpenProfile(false);
+                            }}
+                            className="flex items-center gap-3 w-full px-4 py-3 text-left
+          text-stone-700 hover:bg-[#F4EFE8] transition-colors"
+                          >
+                            <Clock size={18} className="text-emerald-700" />
+                            <span className="text-sm font-medium">
+                              Reservasi Saya
+                            </span>
+                          </button>
+
+                          <div className="h-px bg-[#E7DED3] my-1" />
+
+                          <button
+                            onClick={async () => {
+                              const { logout } = await import(
+                                "@/services/authService"
+                              );
+                              logout();
+                              setOpenProfile(false);
+                            }}
+                            className="flex items-center gap-3 w-full px-4 py-3 text-left
+          text-red-600 hover:bg-red-50 transition-colors"
+                          >
+                            <LogOut size={18} />
+                            <span className="text-sm font-medium">Keluar</span>
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                }
+              </div>
+
               {/* Book Now Button */}
               <Button
-                asChild
                 variant={isScrolled || !isHome ? "luxury" : "hero-solid"}
                 size="lg"
+                onClick={() => {
+                  if (!user) {
+                    setOpenLogin(true);
+                  } else {
+                    navigate("/booking");
+                  }
+                }}
               >
-                <Link to="/booking">{t("nav.book")}</Link>
+                {t("nav.book")}
               </Button>
             </div>
 
@@ -129,7 +266,6 @@ export function Navigation() {
           </div>
         </div>
       </nav>
-
       {/* Mobile Menu */}
       <div
         className={cn(
@@ -157,13 +293,42 @@ export function Navigation() {
             {language === "en" ? "Bahasa Indonesia" : "English"}
           </button>
 
-          <Button asChild variant="luxury" size="xl" className="mt-4">
-            <Link to="/booking" onClick={() => setIsMobileMenuOpen(false)}>
-              {t("nav.book")}
-            </Link>
+          <Button
+            variant="luxury"
+            size="xl"
+            className="mt-4"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              if (!user) {
+                setOpenLogin(true);
+              } else {
+                navigate("/booking");
+              }
+            }}
+          >
+            {t("nav.book")}
           </Button>
         </div>
       </div>
+      {/* LOGIN MODAL */}
+      <LoginModal
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        onOpenRegister={() => {
+          setOpenLogin(false);
+          setOpenRegister(true);
+        }}
+      />
+
+      {/* REGISTER MODAL */}
+      <RegisterModal
+        open={openRegister}
+        onClose={() => setOpenRegister(false)}
+        onOpenLogin={() => {
+          setOpenRegister(false);
+          setOpenLogin(true);
+        }}
+      />
     </>
   );
 }

@@ -17,6 +17,9 @@ import { toast } from "@/hooks/use-toast";
 import roomSuite from "@/assets/room-suite.jpg";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
 import villaGarden from "@/assets/villa-garden.jpg";
+import { useAuth } from "@/contexts/AuthContext";
+import { createBooking } from "@/services/bookingService";
+import { useNavigate } from "react-router-dom";
 
 const roomOptions = [
   { id: "jungle-suite", name: "Executive Suite", price: 450, image: roomSuite },
@@ -27,6 +30,8 @@ const roomOptions = [
 function BookingContent() {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [childrenCount, setChildrenCount] = useState(0);
   const [childrenAges, setChildrenAges] = useState<number[]>([]);
   const [showCustomGuests, setShowCustomGuests] = useState(false);
@@ -42,14 +47,49 @@ function BookingContent() {
     specialRequests: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // STEP PINDAH
     if (step < 3) {
       setStep(step + 1);
-    } else {
+      return;
+    }
+
+    // STEP 3 → SIMPAN KE FIRESTORE
+    if (!user) {
       toast({
-        title: "Booking Request Received",
-        description: "We will contact you shortly to confirm your reservation.",
+        title: "Please login",
+        description: "You must be logged in to book",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await createBooking({
+        userId: user.uid,
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        roomType: selectedRoom?.name || "",
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        guests: Number(formData.guests),
+      });
+
+      toast({
+        title: "Booking Success 🎉",
+        description: "Your reservation has been saved",
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (err) {
+      toast({
+        title: "Booking Failed",
+        description: "Something went wrong",
+        variant: "destructive",
       });
     }
   };
