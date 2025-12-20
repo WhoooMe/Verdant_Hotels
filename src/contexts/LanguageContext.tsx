@@ -99,6 +99,66 @@ const translations: Translations = {
     id: "dalam Dunia Perhotelan",
   },
 
+  // Profile Menu
+  "profile.title": { en: "My Profile", id: "Profil Saya" },
+  "profile.editButton": { en: "Edit Profile", id: "Sunting Profil" },
+  "profile.saveButton": { en: "Save Changes", id: "Simpan Perubahan" },
+  "profile.cancelButton": { en: "Cancel", id: "Batal" },
+  "profile.nameLabel": { en: "Full Name", id: "Nama Lengkap" },
+  "profile.emailLabel": { en: "Email Address", id: "Alamat Email" },
+  "profile.subtitle": {
+    en: "Manage your The Verdant account information",
+    id: "Kelola informasi akun The Verdant Anda",
+  },
+  "profile.membershipStatusLabel": {
+    en: "Membership Status",
+    id: "Status Member",
+  },
+  "Gold Member": { en: "Verdant Club Member", id: "Member Verdant Club" },
+  "profile.active": { en: "Active", id: "Aktif" },
+  "profile.saving": { en: "Saving...", id: "Menyimpan..." },
+
+  //History Menu
+  "reservations.title": { en: "My Reservations", id: "Reservasi Saya" },
+  "reservations.loading": {
+    en: "Loading reservations",
+    id: "Memuat reservasi",
+  },
+  "reservations.empty": {
+    en: "No reservations yet",
+    id: "Belum ada reservasi",
+  },
+  "reservations.nights": { en: "Nights", id: "Malam" },
+  "reservations.bookedBy": { en: "Booked by:", id: "Dipesan oleh" },
+  dot: { en: "·", id: "·" },
+  "reservations.confirm": { en: "Guests", id: "Tamu" },
+  "reservations.hide": { en: "Hide Reservation", id: "Sembunyikan Reservasi" },
+
+  // Confirm Page
+  "booking.confirmationTitle": {
+    en: "Almost Yours",
+    id: "Hampir Milik Anda",
+  },
+  "booking.confirmationSubtitle": {
+    en: "Confirm Your Stay",
+    id: "Konfirmasi Penginapan Anda",
+  },
+  "confirm.guestsC": { en: "Adults", id: "Dewasa" },
+  "confirm.childrenC": { en: "Children", id: "Anak-anak" },
+  "confirm.guests": { en: "Guest", id: "Tamu" },
+  "confirm.perStay": {
+    en: "for 1 night, including taxes & service",
+    id: "untuk 1 malam, termasuk pajak & layanan",
+  },
+  "booking.confirmationTrustNote": {
+    en: "You won’t be charged yet. Free cancellation within 24 hours.",
+    id: "Anda belum akan dikenakan biaya. Pembatalan gratis dalam 24 jam.",
+  },
+  "booking.confirmationCTA": {
+    en: "Confirm & Reserve",
+    id: "Konfirmasi & Pesan",
+  },
+
   // Stats on Home page
   "about.stats.carbonH": { en: "Carbon Neutral", id: "Netral Karbon" },
   "about.stats.yearsH": { en: "Awards Won", id: "Penghargaan Diraih" },

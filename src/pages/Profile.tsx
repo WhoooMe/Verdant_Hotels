@@ -6,9 +6,11 @@ import { useState } from "react";
 import { updateProfile } from "firebase/auth";
 import { Camera, ArrowBigLeft } from "lucide-react";
 import { useEffect } from "react";
+import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 
 export default function Profile() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState<File | null>(null);
   const [name, setName] = useState(user?.displayName || "");
@@ -105,11 +107,9 @@ export default function Profile() {
 
           <div className="text-center">
             <h1 className="text-3xl font-serif font-medium text-emerald-950">
-              Profil Saya
+              {t("profile.title")}
             </h1>
-            <p className="mt-2 text-stone-500">
-              Kelola informasi akun The Verdant Anda
-            </p>
+            <p className="mt-2 text-stone-500">{t("profile.subtitle")}</p>
           </div>
         </div>
 
@@ -196,7 +196,7 @@ export default function Profile() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-stone-400 uppercase tracking-wider">
-                    Nama Lengkap
+                    {t("profile.nameLabel")}
                   </p>
                   {!isEditing ? (
                     <p className="font-medium text-stone-800">{name || "-"}</p>
@@ -223,7 +223,7 @@ export default function Profile() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-stone-400 uppercase tracking-wider">
-                    Alamat Email
+                    {t("profile.emailLabel")}
                   </p>
                   <p className="font-medium text-stone-800">{user?.email}</p>
                 </div>
@@ -240,17 +240,17 @@ export default function Profile() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-stone-400 uppercase tracking-wider">
-                    Status Member
+                    {t("profile.membershipStatusLabel")}
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-stone-800 ">
-                      Verdant Club Member
+                      {t("Gold Member")}
                     </span>
                     <span
                       className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200
   text-[10px] font-bold uppercase tracking-wide"
                     >
-                      Active
+                      {t("profile.active")}
                     </span>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function Profile() {
                 hover:bg-emerald-900 hover:text-white font-medium
                 transition-colors"
               >
-                Edit Profil
+                {t("profile.editButton")}
               </button>
             ) : (
               <div className="mt-8 flex gap-3">
@@ -276,7 +276,7 @@ export default function Profile() {
                   disabled={isUploading}
                   className="flex-1 py-3 rounded-xl bg-emerald-900 text-white"
                 >
-                  {isUploading ? "Menyimpan..." : "Simpan Perubahan"}
+                  {isUploading ? t("profile.saving") : t("profile.saveButton")}
                 </button>
 
                 <button
@@ -290,7 +290,7 @@ export default function Profile() {
                   className="flex-1 py-3 rounded-xl border border-stone-300
   text-stone-600 hover:bg-stone-100 transition"
                 >
-                  Batal
+                  {t("profile.cancelButton")}
                 </button>
               </div>
             )}

@@ -17,6 +17,9 @@ interface BookingPayload {
   checkIn: string;
   checkOut: string;
   guests: number;
+  children: number;
+  childrenAges: number[];
+  specialRequests?: string;
 }
 
 /* CREATE BOOKING */

@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/ui/button";
+import { BookingConfirmationLuxury } from "@/components/booking/BookingConfirmation";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import {
   Calendar,
@@ -39,6 +40,8 @@ function BookingContent() {
     checkIn: "",
     checkOut: "",
     guests: "2",
+    children: 0,
+    childrenAges: [] as number[],
     roomType: "",
     firstName: "",
     lastName: "",
@@ -75,6 +78,9 @@ function BookingContent() {
         checkIn: formData.checkIn,
         checkOut: formData.checkOut,
         guests: Number(formData.guests),
+        children: formData.children,
+        childrenAges: formData.childrenAges,
+        specialRequests: formData.specialRequests,
       });
 
       toast({
@@ -274,6 +280,12 @@ function BookingContent() {
                             const count = Number(e.target.value);
                             setChildrenCount(count);
                             setChildrenAges(Array(count).fill(0));
+
+                            setFormData({
+                              ...formData,
+                              children: count,
+                              childrenAges: Array(count).fill(0),
+                            });
                           }}
                           className="w-full bg-background border border-input rounded-md px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                         >
@@ -302,6 +314,11 @@ function BookingContent() {
                                   const ages = [...childrenAges];
                                   ages[index] = Number(e.target.value);
                                   setChildrenAges(ages);
+
+                                  setFormData({
+                                    ...formData,
+                                    childrenAges: ages,
+                                  });
                                 }}
                                 className="w-full bg-background border border-input rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                               />
@@ -449,72 +466,12 @@ function BookingContent() {
               )}
 
               {/* Step 3: Confirmation */}
-              {step === 3 && (
+              {step === 3 && selectedRoom && (
                 <ScrollReveal>
-                  <div className="p-8 bg-card rounded-lg border border-border">
-                    <h3 className="font-serif text-2xl text-foreground mb-6">
-                      {t("booking.summary")}
-                    </h3>
-
-                    {selectedRoom && (
-                      <div className="flex gap-6 mb-8 pb-8 border-b border-border">
-                        <div className="w-32 h-24 rounded-lg overflow-hidden">
-                          <img
-                            src={selectedRoom.image}
-                            alt={selectedRoom.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-serif text-xl text-foreground">
-                            {selectedRoom.name}
-                          </h4>
-                          <p className="text-muted-foreground">
-                            {formData.checkIn} — {formData.checkOut}
-                          </p>
-                          <p className="text-muted-foreground">
-                            {formData.guests} Guests
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="space-y-4 mb-8">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          {t("booking.guest")}
-                        </span>
-                        <span className="text-foreground">
-                          {formData.firstName} {formData.lastName}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Email</span>
-                        <span className="text-foreground">
-                          {formData.email}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Phone</span>
-                        <span className="text-foreground">
-                          {formData.phone}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-4 bg-secondary rounded-lg text-center">
-                      <p className="text-muted-foreground text-sm mb-2">
-                        {t("booking.estimatedTotal")}
-                      </p>
-                      <p className="font-serif text-3xl text-primary">
-                        ${selectedRoom?.price || 0}
-                        <span className="text-lg text-muted-foreground">
-                          {" "}
-                          /night
-                        </span>
-                      </p>
-                    </div>
-                  </div>
+                  <BookingConfirmationLuxury
+                    room={selectedRoom}
+                    formData={formData}
+                  />
                 </ScrollReveal>
               )}
 
@@ -532,15 +489,17 @@ function BookingContent() {
                 ) : (
                   <div />
                 )}
-                <Button
-                  type="submit"
-                  variant="luxury"
-                  size="lg"
-                  disabled={step === 1 && !formData.roomType}
-                >
-                  {step === 3 ? t("booking.confirm") : t("booking.continue")}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                {step < 3 && (
+                  <Button
+                    type="submit"
+                    variant="luxury"
+                    size="lg"
+                    disabled={step === 1 && !formData.roomType}
+                  >
+                    {t("booking.continue")}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                )}
               </div>
             </form>
 
