@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Globe, User, Clock, LogOut } from "lucide-react";
+import {
+  Menu,
+  X,
+  Globe,
+  User,
+  Clock,
+  LogOut,
+  BedDouble,
+  Utensils,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LogoIcon from "@/assets/logo-icon.png";
@@ -15,6 +24,8 @@ import { fadeSlideDown } from "@/lib/animations";
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openBooking, setOpenBooking] = useState(false);
+  const bookingRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const [openProfile, setOpenProfile] = useState(false);
@@ -32,6 +43,13 @@ export function Navigation() {
       ) {
         setOpenProfile(false);
       }
+
+      if (
+        bookingRef.current &&
+        !bookingRef.current.contains(event.target as Node)
+      ) {
+        setOpenBooking(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -42,6 +60,8 @@ export function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       setOpenProfile(false);
+      setOpenProfile(false);
+      setOpenBooking(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -213,8 +233,7 @@ export function Navigation() {
                               logout();
                               setOpenProfile(false);
                             }}
-                            className="flex items-center gap-3 w-full px-4 py-3 text-left
-          text-red-600 hover:bg-red-50 transition-colors"
+                            className="flex items-center gap-3 w-full px-4 py-3 text-left  text-red-600 hover:bg-red-50 transition-colors"
                           >
                             <LogOut size={18} />
                             <span className="text-sm font-medium">Keluar</span>
@@ -226,20 +245,83 @@ export function Navigation() {
                 }
               </div>
 
-              {/* Book Now Button */}
-              <Button
-                variant={isScrolled || !isHome ? "luxury" : "hero-solid"}
-                size="lg"
-                onClick={() => {
-                  if (!user) {
-                    setOpenLogin(true);
-                  } else {
-                    navigate("/booking");
-                  }
-                }}
-              >
-                {t("nav.book")}
-              </Button>
+              {/* Book Now Dropdown */}
+              <div ref={bookingRef} className="relative">
+                <Button
+                  variant={isScrolled || !isHome ? "luxury" : "hero-solid"}
+                  size="lg"
+                  onClick={() => {
+                    if (!user) {
+                      setOpenLogin(true);
+                    } else {
+                      setOpenBooking((prev) => !prev);
+                    }
+                  }}
+                >
+                  {t("nav.book")}
+                </Button>
+                <AnimatePresence>
+                  {openBooking && user && (
+                    <motion.div
+                      variants={fadeSlideDown}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="absolute right-0 mt-3 w-64 z-50 origin-top-right"
+                    >
+                      <div className="rounded-2xl bg-[#FAF7F2] border border-[#E7DED3] shadow-xl overflow-hidden">
+                        {/* Stay */}
+                        <button
+                          onClick={() => {
+                            navigate("/booking");
+                            setOpenBooking(false);
+                          }}
+                          className="flex gap-4 w-full px-5 py-4 text-left hover:bg-[#F4EFE8] transition"
+                        >
+                          <BedDouble
+                            className="text-emerald-700 mt-1"
+                            size={20}
+                          />
+
+                          <div>
+                            <p className="text-sm font-semibold text-stone-900">
+                              {t("nav.roomSuites")}
+                            </p>
+                            <p className="text-xs text-stone-500">
+                              {t("nav.roomS.Description")}
+                            </p>
+                          </div>
+                        </button>
+
+                        <div className="h-px bg-[#E7DED3]" />
+
+                        {/* Dining */}
+                        <button
+                          onClick={() => {
+                            navigate("/booking/dining");
+                            setOpenBooking(false);
+                          }}
+                          className="flex gap-4 w-full px-5 py-4 text-left hover:bg-[#F4EFE8] transition"
+                        >
+                          <Utensils
+                            className="text-emerald-700 mt-1"
+                            size={20}
+                          />
+
+                          <div>
+                            <p className="text-sm font-semibold text-stone-900">
+                              {t("nav.diningTitle")}
+                            </p>
+                            <p className="text-xs text-stone-500">
+                              {t("nav.dining.description")}
+                            </p>
+                          </div>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Mobile Menu Toggle */}

@@ -18,6 +18,19 @@ const translations: Translations = {
   "nav.spa": { en: "Spa & Wellness", id: "Spa & Kesehatan" },
   "nav.about": { en: "Our Story", id: "Cerita Kami" },
   "nav.book": { en: "Book Now", id: "Pesan Sekarang" },
+  "nav.roomSuites": {
+    en: "Stay · Rooms & Suites",
+    id: "Menginap · Kamar & Suite",
+  },
+  "nav.roomS.Description": {
+    en: "Reserve your luxury accommodation",
+    id: "Pesan akomodasi mewah Anda",
+  },
+  "nav.diningTitle": { en: "Dining Experience", id: "Pengalaman Bersantap" },
+  "nav.dining.description": {
+    en: "Book restaurant & culinary moments",
+    id: "Pesan restoran & momen kuliner",
+  },
 
   // Hero
   "hero.subtitle": { en: "Eco Luxury Retreat", id: "Retret Ramah Lingkungan" },
@@ -267,6 +280,211 @@ const translations: Translations = {
   // Common
   "common.learnMore": { en: "Learn More", id: "Pelajari Lebih Lanjut" },
   "common.viewAll": { en: "View All", id: "Lihat Semua" },
+  "common.selectExperience": {
+    en: "Select Experience →",
+    id: "Pilih Pengalaman →",
+  },
+  "common.perPerson": { en: "Person", id: "Orang" },
+
+  //Dining Booking Page
+  "dining.verdant.description": {
+    en: "Reserve an intimate dining experience where seasonal flavors, elegant ambiance, and thoughtful service come together.",
+    id: "Pengalaman bersantap mewah yang eksklusi dengan menampilkan bahan-bahan musiman yang dipasok secara lokal.",
+  },
+
+  "dining.verdant.name": {
+    en: "The Verdant Dining",
+    id: "The Verdant Dining",
+  },
+  "dining.verdant.subtitle": {
+    en: "Intimate Fine Dining",
+    id: "Makan Malam Mewah",
+  },
+  "dining.forest.name": {
+    en: "Forest Terrace",
+    id: "Teras Hutan",
+  },
+  "dining.forest.subtitle": {
+    en: "Outdoor Dining",
+    id: "Makan di Alam Terbuka",
+  },
+  "dining.forest.description": {
+    en: "Enjoy refined cuisine surrounded by lush greenery and natural serenity.",
+    id: "Nikmati hidangan istimewa dengan suasana hijau yang tenang dan alami.",
+  },
+
+  "dining.chef.name": {
+    en: "Private Chef’s Table",
+    id: "Meja Koki Pribadi",
+  },
+  "dining.chef.subtitle": {
+    en: "Exclusive Experience",
+    id: "Pengalaman Eksklusif",
+  },
+  "dining.chef.description": {
+    en: "A private dining experience curated personally by our executive chef.",
+    id: "Pengalaman makan privat yang dikurasi langsung oleh kepala executive chef kami.",
+  },
+
+  "dining_reservation.title": {
+    en: "The Verdant Dining",
+    id: "The Verdant Dining",
+  },
+  "dining_reservation.description": {
+    en: "Dining Reservation",
+    id: "Reservasi Tempat Makan",
+  },
+
+  //Progress Steps
+  "dining.steps.experience": { en: "Experience", id: "Pengalaman" },
+  "dining.steps.datetime": { en: "Date & Time", id: "Tanggal & Waktu" },
+  "dining.steps.confirmation": { en: "Confirmation", id: "Konfirmasi" },
+
+  // Dining STEP 2
+  "dining.reservastion": { en: "Reservation Date", id: "Tanggal Reservasi" },
+  "dining.time": { en: "Time", id: "Waktu" },
+  "dining.preferredTime": { en: "Preferred Time", id: "Waktu Pilihan" },
+  "dining.adults": { en: "Adults", id: "Dewasa" },
+  "dining.children": { en: "Children", id: "Anak-Anak (Optional)" },
+  "dining.childrenAgeGroup": {
+    en: "Children Age Group",
+    id: "Kelompok Usia Anak",
+  },
+  "dining.under15": {
+    en: "Under 15 years (Complimentary)",
+    id: "Di bawah 15 tahun (Gratis)",
+  },
+  "dining.over15": {
+    en: "15–17 years ($10)",
+    id: "15–17 tahun ($10)",
+  },
+  "dining.seatingPreference": {
+    en: "Seating Preference",
+    id: "Preferensi Tempat Duduk",
+  },
+  "dining.occasion": { en: "Occasion", id: "Acara (Optional)" },
+  "dining.none": { en: "None", id: "Tidak Ada" },
+  "dining.birthday": { en: "Birthday", id: "Ulang Tahun" },
+  "dining.anniversary": { en: "Anniversary", id: "Anniversari" },
+  "dining.business": { en: "Business", id: "Bisnis" },
+  "dining.honeymoon": { en: "Honeymoon", id: "Bulan Madu" },
+  "dining.specialRequests": { en: "Special Requests", id: "Permintaan Khusus" },
+  "dining.back": { en: "Back", id: "Kembali" },
+  "dining.continue": { en: "Continue", id: "Lanjutkan" },
+
+  //DINING STEP 3
+  "dining.summaryRev": {
+    en: "Review Your Reservation",
+    id: "Periksa Pemesanan Anda",
+  },
+  "dining.summary.Description": {
+    en: "Please review your dining details before confirming.",
+    id: "Silakan periksa detail pemesanan makan Anda sebelum mengonfirmasi.",
+  },
+  "dining.fee": { en: "Dining Fee", id: "Biaya Makan" },
+  "dining.totals": { en: "Totals", id: "Total" },
+  "dining.selectExp": { en: "Selected Experience", id: "Pengalaman Terpilih" },
+  "dining.price.person": { en: "Price per person", id: "Harga per orang" },
+  "dining.Date": { en: "Date", id: "Tanggal" },
+  "dining.Time": { en: "Time", id: "Waktu" },
+  "dining.Guest": { en: "Guest", id: "Tamu" },
+  "dining.Seating": { en: "Seating", id: "Tempat Duduk" },
+  "dining.OccasionSum": { en: "Occasion", id: "Acara" },
+  "dining.Back.Sum": { en: "Back", id: "Kembali" },
+  "dining.Confirm.Rev": {
+    en: "Confirm Reservation",
+    id: "Konfirmasi Pemesanan",
+  },
+
+  //DINER PRICING
+  "dining.pricing": { en: "Dining Pricing", id: "List Harga" },
+  "dining.PAdults": { en: "Adult (18+)", id: "Dewasa (18+)" },
+  "dining.PChildren": { en: "Child (15–17)", id: "Anak-Anak (15-17)" },
+  "dining.PChildrenComplemen": {
+    en: "Children under 15 dine complimentary",
+    id: "Anak-anak di bawah 15 tahun, gratis.",
+  },
+
+  //CHOOSE TIME
+  "dining.time.breakfast": {
+    en: "Breakfast",
+    id: "Sarapan",
+  },
+  "dining.time.lunch": {
+    en: "Lunch",
+    id: "Makan Siang",
+  },
+  "dining.time.dinner": {
+    en: "Dinner",
+    id: "Makan Malam",
+  },
+
+  // TEMPAT MAKAN
+  "dining.seat.indoor": {
+    en: "Indoor",
+    id: "Dalam Ruangan",
+  },
+  "dining.seat.outdoor": {
+    en: "Outdoor",
+    id: "Luar Ruangan",
+  },
+  "dining.seat.window": {
+    en: "Window View",
+    id: "Dekat Jendela",
+  },
+  "dining.seat.garden": {
+    en: "Garden View",
+    id: "Pemandangan Taman",
+  },
+
+  //SPECIAL REQUEST
+  "dining.specialRequests.placeholder": {
+    en: "Allergies, celebrations, preferences",
+    id: "Alergi, perayaan, atau permintaan khusus",
+  },
+
+  //BAGDE KEY
+  "dining.verdantBadge.signature": {
+    en: "Eco Signature",
+    id: "Pilihan Rekomendasi",
+  },
+  "dining.forestBadge.signature": {
+    en: "Nature Dining",
+    id: "Makan di Alam Terbuka",
+  },
+  "dining.chefBadge.signature": { en: "Chef Exclusive", id: "Chef Eksklusif" },
+
+  //WARNING PAGE
+  "warning.leaveMassage": {
+    en: "Leave this reservation?",
+    id: "Batalkan Pesanan Ini?",
+  },
+  "warning.description": {
+    en: "Your dining reservation details will not be saved if you leave this page.",
+    id: "Rincian reservasi makan Anda tidak akan disimpan jika Anda meninggalkan halaman ini.",
+  },
+  "warning.continue": { en: "Continue Editing", id: "Lanjutkan Pengeditan" },
+  "warning.exit": { en: "Leave Page", id: "Keluar dari Halaman" },
+};
+
+export const pricingText = {
+  en: {
+    adult: "Adult",
+    child: "Child (15+)",
+    freeChild: "Children under 15 are free",
+    total: "Total",
+  },
+  id: {
+    adult: "Dewasa",
+    child: "Anak (15+)",
+    freeChild: "Anak di bawah 15 tahun gratis",
+    total: "Total",
+  },
+};
+
+export const currencyFormat = {
+  en: (value: number) => `USD ${value}`,
+  id: (value: number) => `IDR ${value.toLocaleString("id-ID")}`,
 };
 
 interface LanguageContextType {

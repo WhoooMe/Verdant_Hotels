@@ -13,6 +13,7 @@ import {
   MessageCircle,
   Phone,
   Baby,
+  ArrowLeft,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import roomSuite from "@/assets/room-suite.jpg";
@@ -20,7 +21,7 @@ import roomDeluxe from "@/assets/room-deluxe.jpg";
 import villaGarden from "@/assets/villa-garden.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 import { createBooking } from "@/services/bookingService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const roomOptions = [
   { id: "jungle-suite", name: "Executive Suite", price: 450, image: roomSuite },
@@ -33,9 +34,11 @@ function BookingContent() {
   const [step, setStep] = useState(1);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [childrenCount, setChildrenCount] = useState(0);
   const [childrenAges, setChildrenAges] = useState<number[]>([]);
   const [showCustomGuests, setShowCustomGuests] = useState(false);
+  const [showLeaveWarning, setShowLeaveWarning] = useState(false);
   const [formData, setFormData] = useState({
     checkIn: "",
     checkOut: "",
@@ -49,6 +52,16 @@ function BookingContent() {
     phone: "",
     specialRequests: "",
   });
+
+  const isFormDirty =
+    formData.checkIn ||
+    formData.checkOut ||
+    formData.roomType ||
+    formData.firstName ||
+    formData.lastName ||
+    formData.email ||
+    formData.phone ||
+    formData.specialRequests;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,14 +113,73 @@ function BookingContent() {
     }
   };
 
+  function handleBack() {
+    const forceHomeRoutes = ["/booking", "/dining-booking"];
+
+    if (isFormDirty) {
+      setShowLeaveWarning(true);
+      return;
+    }
+
+    if (forceHomeRoutes.includes(location.pathname)) {
+      navigate("/", { replace: true });
+    } else {
+      navigate(-1);
+    }
+  }
+
   const selectedRoom = roomOptions.find((r) => r.id === formData.roomType);
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      {showLeaveWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-[#FAF7F2] rounded-2xl p-6 w-full max-w-md shadow-xl">
+            <h3 className="font-serif text-xl mb-2">
+              {t("warning.leaveMassage")}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              {t("warning.description")}
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowLeaveWarning(false)}
+                className="px-4 py-2 rounded-lg border"
+              >
+                {t("warning.continue")}
+              </button>
+
+              <button
+                onClick={() => navigate("/", { replace: true })}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white"
+              >
+                {t("warning.exit")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-secondary">
+      <section className="pt-32 pb-16 bg-secondary relative">
+        <button
+          onClick={handleBack}
+          className="
+        absolute left-0
+        flex items-center justify-center
+        h-10 w-10 rounded-full
+        border border-[#E7DED3]
+        bg-[#8B6F4E]
+        text-white
+        hover:bg-emerald-700
+        transition
+        ml-24
+      "
+        >
+          <ArrowLeft size={18} />
+        </button>
         <div className="container mx-auto px-6">
           <ScrollReveal className="text-center max-w-3xl mx-auto">
             <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">

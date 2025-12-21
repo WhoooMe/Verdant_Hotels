@@ -14,10 +14,10 @@ export function BookingConfirmationLuxury({ room, formData }: Props) {
       {/* Title */}
       <div className="mb-8">
         <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">
-          t{"booking.confirmationTitle"}
+          {t("booking.confirmationTitle")}
         </p>
         <h3 className="font-serif text-3xl text-foreground">
-          t{"booking.confirmationSubtitle"}
+          {t("booking.confirmationSubtitle")}
         </h3>
       </div>
 
@@ -40,11 +40,11 @@ export function BookingConfirmationLuxury({ room, formData }: Props) {
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <Users className="w-4 h-4" />
             <span>
-              {formData.guests} t("confirm.guestsC")
+              {formData.guests} {t("confirm.guestsC")}
               {formData.children > 0 && (
                 <>
                   <span className="mx-2">•</span>
-                  {formData.children} t("confirm.childrenC")
+                  {formData.children} {t("confirm.childrenC")}
                 </>
               )}
             </span>
@@ -56,7 +56,7 @@ export function BookingConfirmationLuxury({ room, formData }: Props) {
       <div className="grid md:grid-cols-2 gap-6 mb-10">
         <div>
           <p className="text-sm text-muted-foreground mb-1">
-            t("confirm.guests")
+            {t("confirm.guests")}
           </p>
           <p className="text-foreground">
             {formData.firstName} {formData.lastName}
@@ -71,14 +71,14 @@ export function BookingConfirmationLuxury({ room, formData }: Props) {
           </p>
           <p className="font-serif text-4xl text-primary">${room.price}</p>
           <p className="text-xs text-muted-foreground mt-2">
-            t{"confirm.perStay"}
+            {t("confirm.perStay")}
           </p>
         </div>
       </div>
 
       {/* Trust Note */}
       <p className="text-center text-xs text-muted-foreground mb-6">
-        t{"booking.confirmationTrustNote"}
+        {t("booking.confirmationTrustNote")}
       </p>
 
       {/* CTA */}
@@ -88,7 +88,7 @@ export function BookingConfirmationLuxury({ room, formData }: Props) {
         size="xl"
         className="w-full h-14 rounded-xl text-lg"
       >
-        t{"booking.confirmationCTA"}
+        {t("booking.confirmationCTA")}
       </Button>
     </div>
   );

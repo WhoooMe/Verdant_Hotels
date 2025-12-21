@@ -13,6 +13,7 @@ import ProtectedRoute from "@/routes/ProtectedRoute";
 import Profile from "./pages/Profile";
 import MyReservations from "./pages/MyReservations";
 import Register from "@/pages/Register";
+import DiningBooking from "./pages/booking/DiningBooking";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
               </ProtectedRoute>
             }
           />
+          <Route path="/booking/dining" element={<DiningBooking />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
