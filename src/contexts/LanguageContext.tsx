@@ -395,6 +395,10 @@ const translations: Translations = {
     en: "Confirm Reservation",
     id: "Konfirmasi Pemesanan",
   },
+  "dining.SpecialRequest.Sum": {
+    en: "Special Request",
+    id: "Permintaan Khusus",
+  },
 
   //DINER PRICING
   "dining.pricing": { en: "Dining Pricing", id: "List Harga" },

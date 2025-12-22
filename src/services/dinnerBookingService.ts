@@ -1,5 +1,23 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
+
+export const getMyDiningReservations = async (uid: string) => {
+  const snapshot = await getDocs(
+    query(collection(db, "dinnerBookings"), where("userId", "==", uid))
+  );
+
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+};
 
 export interface DinnerBookingPayload {
   userId: string;
@@ -7,6 +25,7 @@ export interface DinnerBookingPayload {
   email: string;
 
   date: string;
+  timeCategory: "breakfast" | "lunch" | "dinner";
   time: string;
 
   // GUESTS

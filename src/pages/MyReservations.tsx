@@ -3,15 +3,28 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { getMyReservations } from "@/services/bookingService";
-import { ArrowBigLeft, Trash2 } from "lucide-react";
+import { ArrowBigLeft, Trash2, BedDouble, UtensilsCrossed } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { getMyDiningReservations } from "@/services/dinnerBookingService";
 
 interface Reservation {
   id: string;
   roomType: string;
+  type: "room";
   checkIn: string;
   checkOut: string;
+  guests: number;
+  name: string;
+  email: string;
+}
+
+interface DiningReservation {
+  id: string;
+  type: "dining";
+  experienceName: string;
+  date: string;
+  time: string;
   guests: number;
   name: string;
   email: string;
@@ -22,8 +35,10 @@ export default function MyReservations() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  type AnyReservation = Reservation | DiningReservation;
+  const [reservations, setReservations] = useState<AnyReservation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<"all" | "room" | "dining">("all");
 
   const calculateNights = (checkIn: string, checkOut: string) => {
     const inDate = new Date(checkIn);
@@ -37,17 +52,40 @@ export default function MyReservations() {
   };
 
   useEffect(() => {
-    console.log("AUTH USER UID:", user?.uid);
     if (!user) {
       setLoading(false);
       return;
     }
 
     const fetchReservations = async () => {
-      const data = await getMyReservations(user.uid);
-      console.log("RESERVATIONS RESULT:", data);
-      setReservations(data as Reservation[]);
-      setLoading(false);
+      try {
+        setLoading(true);
+
+        // ROOM
+        const roomData: Reservation[] = (await getMyReservations(user.uid)).map(
+          (r: any) => ({
+            ...r,
+            type: "room",
+          })
+        );
+
+        // DINING
+        const diningRaw = await getMyDiningReservations(user.uid);
+
+        const diningData: DiningReservation[] = (diningRaw ?? []).map(
+          (d: any) => ({
+            ...d,
+            type: "dining",
+          })
+        );
+
+        setReservations([...roomData, ...diningData]);
+      } catch (error) {
+        console.error("FAILED FETCH RESERVATIONS:", error);
+        setReservations([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchReservations();
@@ -98,6 +136,29 @@ export default function MyReservations() {
 
           <h1 className="text-3xl font-serif">{t("reservations.title")}</h1>
         </div>
+        {/*BREAD CRUMB*/}
+        <div className="flex gap-3 mb-10">
+          {[
+            { key: "all", label: "All Reservations" },
+            { key: "room", label: "Rooms" },
+            { key: "dining", label: "Dining" },
+          ].map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setFilter(item.key as any)}
+              className={`
+        px-5 py-2 rounded-full text-sm font-medium transition
+        ${
+          filter === item.key
+            ? "bg-primary text-white"
+            : "bg-muted text-muted-foreground hover:bg-muted/70"
+        }
+      `}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
 
         {/* NANTI DATA FIRESTORE */}
         {/* LOADING */}
@@ -118,6 +179,7 @@ export default function MyReservations() {
         <div className="grid gap-6">
           {reservations
             .filter((res) => !hiddenIds.includes(res.id))
+            .filter((res) => filter === "all" || res.type === filter)
             .map((res) => (
               <div
                 key={res.id}
@@ -125,7 +187,28 @@ export default function MyReservations() {
               >
                 {/* HEADER */}
                 <div className="flex items-start justify-between">
-                  <h2 className="text-xl font-semibold">{res.roomType}</h2>
+                  <div className="flex items-center gap-3">
+                    {res.type === "room" ? (
+                      <BedDouble className="w-5 h-5 text-primary" />
+                    ) : (
+                      <UtensilsCrossed className="w-5 h-5 text-primary" />
+                    )}
+
+                    <h2 className="text-xl font-semibold">
+                      {res.type === "room" ? res.roomType : res.experienceName}
+                    </h2>
+
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium
+      ${
+        res.type === "room"
+          ? "bg-blue-100 text-blue-700"
+          : "bg-green-100 text-green-700"
+      }`}
+                    >
+                      {res.type.toUpperCase()}
+                    </span>
+                  </div>
 
                   <div className="flex items-center gap-3">
                     <span className="text-xs text-muted-foreground font-mono">
@@ -149,15 +232,22 @@ export default function MyReservations() {
                 </div>
 
                 {/* DATE */}
-                <p className="text-sm text-muted-foreground">
-                  {res.checkIn} → {res.checkOut}
+                <p className="text-sm text-muted-foreground italic">
+                  {res.type === "room"
+                    ? `${res.checkIn} → ${res.checkOut}`
+                    : `${res.date} • ${res.time}`}
                 </p>
 
                 {/* Meta */}
-                <p className="text-sm">
-                  <strong>{calculateNights(res.checkIn, res.checkOut)}</strong>{" "}
-                  {t("reservations.nights")} {t("dot")}{" "}
-                  <strong>{res.guests}</strong> {t("reservations.confirm")}
+                <p className="text-sm text-muted-foreground">
+                  {res.type === "room" ? (
+                    <>
+                      {calculateNights(res.checkIn, res.checkOut)} nights •{" "}
+                      {res.guests} guests
+                    </>
+                  ) : (
+                    <>{res.guests} guests • Dining Experience</>
+                  )}
                 </p>
 
                 {/* BOOKER */}

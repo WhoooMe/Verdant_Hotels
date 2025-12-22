@@ -49,6 +49,15 @@ export default function DiningBooking() {
       return;
     }
 
+    if (!formData.date || !formData.time) {
+      toast({
+        title: "Date & time required",
+        description: "Please select date and time",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       await createDinnerBooking({
         userId: user.uid,
@@ -56,12 +65,13 @@ export default function DiningBooking() {
         email: user.email || "",
 
         date: formData.date,
+        timeCategory: formData.timeCategory as "breakfast" | "lunch" | "dinner",
         time: formData.time,
 
         adults: formData.adults,
         children: formData.children,
         guests: formData.adults + formData.children,
-        childrenAgeGroup: childAgeGroup || undefined,
+        ...(childAgeGroup && { childrenAgeGroup: childAgeGroup }),
 
         seating: formData.seating,
         occasion: formData.occasion,
@@ -87,10 +97,12 @@ export default function DiningBooking() {
       });
 
       navigate("/my-reservations");
-    } catch (err) {
+    } catch (err: any) {
+      console.error("DINING BOOKING ERROR:", err);
+
       toast({
         title: "Failed",
-        description: "Could not save reservation",
+        description: err?.message || "Could not save reservation",
         variant: "destructive",
       });
     }
@@ -188,18 +200,14 @@ export default function DiningBooking() {
   const navigate = useNavigate();
 
   function handleBack() {
-    const forceHomeRoutes = ["/booking", "/dining-booking"];
-
+    // 1. Kalau form sudah diisi, warning dulu
     if (isDirty) {
       setShowLeaveWarning(true);
       return;
     }
 
-    if (forceHomeRoutes.includes(location.pathname)) {
-      navigate("/", { replace: true });
-    } else {
-      navigate(-1);
-    }
+    // 2. To Home,
+    navigate("/", { replace: true });
   }
 
   function DetailRow({
@@ -233,6 +241,13 @@ export default function DiningBooking() {
     formData.adults * ADULT_PRICE + formData.children * CHILD_PRICE;
 
   const totalPrice = experienceTotal + diningTotal;
+
+  const timeLabel =
+    formData.timeCategory && TIME_SLOTS[formData.timeCategory]
+      ? t(TIME_SLOTS[formData.timeCategory].labelKey)
+      : "-";
+
+  const timeValue = formData.time || "-";
 
   return (
     <div className="min-h-screen bg-background">
@@ -714,7 +729,7 @@ export default function DiningBooking() {
                         {t("dining.selectExp")}
                       </p>
                       <h3 className="font-serif text-xl">
-                        {selectedExperience.name}
+                        {t(selectedExperience.nameKey)}
                       </h3>
                     </div>
                   </div>
@@ -738,9 +753,7 @@ export default function DiningBooking() {
                   />
                   <DetailRow
                     label={t("dining.Time")}
-                    value={`${t(
-                      TIME_SLOTS[formData.timeCategory]?.labelKey
-                    )} · ${formData.time}`}
+                    value={`${timeLabel} · ${timeValue}`}
                     icon={Clock}
                   />
                   <DetailRow

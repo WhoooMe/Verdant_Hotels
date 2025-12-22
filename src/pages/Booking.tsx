@@ -34,7 +34,6 @@ function BookingContent() {
   const [step, setStep] = useState(1);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [childrenCount, setChildrenCount] = useState(0);
   const [childrenAges, setChildrenAges] = useState<number[]>([]);
   const [showCustomGuests, setShowCustomGuests] = useState(false);
@@ -114,18 +113,12 @@ function BookingContent() {
   };
 
   function handleBack() {
-    const forceHomeRoutes = ["/booking", "/dining-booking"];
-
     if (isFormDirty) {
       setShowLeaveWarning(true);
       return;
     }
 
-    if (forceHomeRoutes.includes(location.pathname)) {
-      navigate("/", { replace: true });
-    } else {
-      navigate(-1);
-    }
+    navigate("/", { replace: true });
   }
 
   const selectedRoom = roomOptions.find((r) => r.id === formData.roomType);
