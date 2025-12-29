@@ -103,13 +103,14 @@ function RoomsContent() {
           language === "en"
             ? "Please sign in to continue your booking experience."
             : "Silakan login terlebih dahulu untuk melanjutkan proses booking.",
-        variant: "destructive", // atau default
+        variant: "destructive",
       });
       return;
     }
 
     navigate("/booking");
   };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
