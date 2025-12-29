@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import MyReservations from "./pages/MyReservations";
 import Register from "@/pages/Register";
 import DiningBooking from "./pages/booking/DiningBooking";
+import AvailabilityPages from "@/pages/AvailabilityPages";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
               </ProtectedRoute>
             }
           />
+          <Route path="/availability" element={<AvailabilityPages />} />
           <Route path="/" element={<Index />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rooms/:id" element={<Rooms />} />

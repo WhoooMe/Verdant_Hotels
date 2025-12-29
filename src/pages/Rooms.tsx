@@ -4,6 +4,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 import {
   ArrowRight,
   Maximize2,
@@ -86,7 +89,27 @@ const amenityIcons: Record<
 
 function RoomsContent() {
   const { language, t } = useLanguage();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const auth = getAuth();
 
+  const handleBook = () => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      toast({
+        title: language === "en" ? "Login Required" : "Login Diperlukan",
+        description:
+          language === "en"
+            ? "Please sign in to continue your booking experience."
+            : "Silakan login terlebih dahulu untuk melanjutkan proses booking.",
+        variant: "destructive", // atau default
+      });
+      return;
+    }
+
+    navigate("/booking");
+  };
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -187,11 +210,14 @@ function RoomsContent() {
                           </span>
                         </p>
                       </div>
-                      <Button asChild variant="luxury" size="lg">
-                        <Link to="/booking" className="flex items-center gap-2">
-                          {t("nav.book")}
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
+                      <Button
+                        variant="luxury"
+                        size="lg"
+                        onClick={handleBook}
+                        className="flex items-center gap-2"
+                      >
+                        {t("nav.book")}
+                        <ArrowRight className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>

@@ -3,12 +3,48 @@ import { Calendar, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { toast } from "sonner";
 
 export function BookingWidget() {
   const { t } = useLanguage();
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("2");
+
+  function isRangeValid(start: string, end: string) {
+    return true;
+  }
+
+  function isPastDate(date: string) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const selectedDate = new Date(date);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    return selectedDate < today;
+  }
+
+  function handleCheckAvailability(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!checkIn || !checkOut) {
+      toast.info(t("toast.selectDates"));
+      return;
+    }
+
+    if (checkOut <= checkIn) {
+      toast.error(t("toast.checkoutAfterCheckin"));
+      return;
+    }
+
+    if (isPastDate(checkIn) || isPastDate(checkOut)) {
+      toast.error(t("toast.pastDate"));
+      return;
+    }
+
+    toast.success(t("toast.available"));
+  }
 
   return (
     <section className="py-16 bg-primary">
@@ -19,7 +55,10 @@ export function BookingWidget() {
               {t("booking.title")}
             </h2>
 
-            <form className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-primary-foreground/10 backdrop-blur-sm rounded-lg p-4 border border-primary-foreground/20">
+            <form
+              onSubmit={handleCheckAvailability}
+              className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-primary-foreground/10 backdrop-blur-sm rounded-lg p-4 border border-primary-foreground/20"
+            >
               {/* Check-in */}
               <div className="relative">
                 <label className="block text-primary-foreground/70 text-xs uppercase tracking-wide mb-2">

@@ -54,7 +54,7 @@ const translations: Translations = {
   },
   "rooms.view": { en: "View Details", id: "Lihat Detail" },
   "rooms.from": { en: "From", id: "Mulai dari" },
-  "rooms.perNight": { en: "per night", id: "per malam" },
+  "rooms.perNight": { en: "/ night", id: "per malam" },
 
   // Experience
   "experience.subtitle": { en: "Discover", id: "Temukan" },
@@ -469,6 +469,27 @@ const translations: Translations = {
   },
   "warning.continue": { en: "Continue Editing", id: "Lanjutkan Pengeditan" },
   "warning.exit": { en: "Leave Page", id: "Keluar dari Halaman" },
+
+  // TOAST
+  "toast.selectDates": {
+    en: "Please select check-in and check-out dates",
+    id: "Silakan pilih tanggal check-in dan check-out terlebih dahulu",
+  },
+
+  "toast.checkoutAfterCheckin": {
+    en: "Please select check-in and check-out dates",
+    id: "Silakan pilih tanggal check-in dan check-out terlebih dahulu",
+  },
+
+  "toast.pastDate": {
+    en: "Sorry, the selected dates are not available",
+    id: "Maaf, tanggal yang dipilih tidak tersedia.",
+  },
+
+  "toast.available": {
+    en: "Good news! This room is available 🎉",
+    id: "Berita baik! Kamar ini tersedia 🎉",
+  },
 };
 
 export const pricingText = {
